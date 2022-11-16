@@ -10,7 +10,7 @@ Create S3 Bucket for the customerized deploymeng resources
 git clone https://github.com/nwcd-solutions/scale-out-computing-on-aws.git
 cd scale-out-computing-on-aws/v2.6
 ```
-Modify files
+Modify related files under ./source folder
 ```
 tar zcvf  soca.tar.gz -C source .
 ```
