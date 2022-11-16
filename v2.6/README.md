@@ -14,4 +14,4 @@ Modify related files under ./source folder
 ```
 tar zcvf  soca.tar.gz -C source .
 ```
-Upload v2.6 folder to S3 bucket created in prerequistes,use the url of scale-out-computing-on-aws-without-es.template under v2.6 folder in AWS CloudFomation console to create new stack.
+Upload v2.6 folder to S3 bucket created in prerequistes,use the url of `scale-out-computing-on-aws-without-es.template` under v2.6 folder in AWS CloudFomation console to create new stack.
