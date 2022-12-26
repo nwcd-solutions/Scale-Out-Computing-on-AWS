@@ -385,6 +385,9 @@ Resources:
                   - autoscaling:DetachInstances
                   - ec2:DeleteLaunchTemplate
                   - ec2:CreateLaunchTemplate
+                  - ec2:ModifyFleet
+                  - ec2:DeleteFleets
+                  - ec2:CreateFleet
                   - fsx:CreateDataRepositoryTask
                 Resource: "*"
                 Condition:
@@ -463,6 +466,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - fsx:CreateFileSystem
+                  - fsx:TagResource
                 Resource:
                   - !Join [ "", [ "arn:", !Ref "AWS::Partition", ":fsx:", !Ref "AWS::Region", ":", !Ref  "AWS::AccountId", ":file-system/*"] ]
 

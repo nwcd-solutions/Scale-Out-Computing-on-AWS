@@ -1,6 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: (SOCA) - Deploy master host.
 Parameters:
+  AppVolume:
+    Type: String
+
+  DataVolume:
+    Type: String
+
   SubnetId:
     Type: AWS::EC2::Subnet::Id
 
@@ -72,12 +78,12 @@ Resources:
       BlockDeviceMappings:
         - DeviceName: !If [UseAmazonLinux, "/dev/xvda", "/dev/sda1"]
           Ebs:
-            VolumeSize: 150
+            VolumeSize: !Ref DataVolume
             VolumeType: gp2
             Encrypted: true
         - DeviceName: "/dev/sdf"
           Ebs:
-            VolumeSize: 100
+            VolumeSize: !Ref AppVolume
             VolumeType: gp2
             SnapshotId: !Ref AppsSnapId
 
@@ -113,7 +119,6 @@ Resources:
             echo export "SOCA_VERSION=${Version}" >> /etc/environment
             echo export "SOCA_INSTALL_AMI=${ImageId}" >> /etc/environment
             echo export "DCV_USERNAME=${UserName}">> /etc/environment
-            echo export "DCV_USER_PASSWD=${UserPassword}" >> /etc/environment
             source /etc/environment
 
             # Tag EBS disks manually as CFN ASG does not support it

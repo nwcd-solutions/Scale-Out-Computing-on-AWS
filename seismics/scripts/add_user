@@ -1,0 +1,23 @@
+#!/bin/bash
+if [ ! -n "$1" ] ;then
+    echo "you have not input a user name!"
+else
+    if [ -n "$2" ] ;then
+       usershell=$2
+    else usershell=/bin/bash
+    fi
+    useradd -d /data/home/$1 $1 -s $2
+    if [ -n "$3" ] ; then
+       echo "$3" | passwd $1 --stdin > /dev/null 2>&1
+       echo "setting passwd"
+    fi
+    chown -R $1:$1  /data/home/$1
+    echo "$1 ALL=(ALL) ALL" >> /etc/sudoers
+    su - $1 -c " ssh-keygen -f ~/.ssh/id_rsa -P '' && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_key  &&chmod go-w /data/home/$1"
+    echo "
+useradd -d /data/home/$1 $1 -u $(id -u $1) -M -s $usershell  && echo \"$1 ALL=(ALL) NOPASSWD:ALL \" >> /etc/sudoers
+" >> /apps/soca/$SOCA_CONFIGURATION/cluster_node_bootstrap/ComputeNodeUserCustomization.sh
+dcv create-session --user $1 --owner $1 --type virtual --storage-root "/data/home/$1/storage-root" $1
+echo "@reboot dcv create-session --owner $1 --storage-root \"/data/home/$1/storage-root\" $1 # Do Not Delete"| crontab - -u $1
+echo "add user $1 successful"
+fi

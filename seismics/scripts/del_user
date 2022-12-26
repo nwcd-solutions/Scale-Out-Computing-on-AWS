@@ -1,0 +1,17 @@
+#!/bin/bash
+if dcv list-sessions | grep -q "$1" ;then
+   dcv close-session $1
+fi
+if id -u "$1" >/dev/null 2>&1;then
+  userdel -r $1
+  while [[ $? -ne 0 ]]
+     do
+       echo "retry to delete..."
+       sleep 4
+       userdel -r $1
+  done
+  sed -i "/$1/d" /apps/soca/$SOCA_CONFIGURATION/cluster_node_bootstrap/ComputeNodeUserCustomization.sh
+  echo "delete user $1 successful"
+else
+  echo "user $1 does not exist"
+fi

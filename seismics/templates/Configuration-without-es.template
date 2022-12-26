@@ -1,6 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: (SOCA) -  Manage cluster-related information.
 Parameters:
+  AdminUserName:
+    Type: String
+
+  AdminUserShell:
+    Type: String
+
   VpcId:
     Type: String
 
@@ -111,6 +117,8 @@ Resources:
       Name: !Sub ${ClusterId}
       Description: !Sub Contain all settings for ${ClusterId}
       SecretString: !Sub '{"VpcId": "${VpcId}",
+      "AdminUserName": "${AdminUserName}",
+      "AdminUserShell":"${AdminUserShell}",
       "PublicSubnet1": "${PublicSubnet1}",
       "PublicSubnet2": "${PublicSubnet2}",
       "PublicSubnet3": "${PublicSubnet3}",
@@ -164,3 +172,4 @@ Resources:
       Roles:
         - !Ref ComputeNodeIAMRole
         - !Ref SchedulerIAMRole
+
