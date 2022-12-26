@@ -6,7 +6,7 @@ else
        usershell=$2
     else usershell=/bin/bash
     fi
-    useradd -d /data/home/$1 $1 -s $2
+    useradd -d /data/home/$1 $1 -s $usershell
     if [ -n "$3" ] ; then
        echo "$3" | passwd $1 --stdin > /dev/null 2>&1
        echo "setting passwd"
