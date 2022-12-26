@@ -1,3 +1,4 @@
+![architecture](img/architecture.png)
 ## 快速部署指南
 您可以使用默认配置通过 CloudFormation 将此解决方案快速部署到中国宁夏区域（由西云数据运营）.
 Region name | Region code | Launch
